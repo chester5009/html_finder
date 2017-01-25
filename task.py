@@ -7,18 +7,23 @@ class Task():
         self.task=task
         pass
 
+    def clearFile(self,filename):
+        f = open(filename.replace("\n", ""), "w").close()
+
+        pass
+
     def writeResult(self,res,filename):
-        f= open(filename+".txt","a")
+        f= open(filename.replace("\n",""),"a")
         if len(res)>0:
-            f.write("URL: "+self.task[0]+"\n")
+            '''f.write("URL: "+self.task[0]+"\n")
             f.write("From: "+str(self.task[1])+"\n")
-            f.write("To: "+str(self.task[2])+"\n")
+            f.write("To: "+str(self.task[2])+"\n")'''
             f.write(res)
             f.write("\n\n\n")
         else:
-            f.write("URL: " + self.task[0] + "\n")
+            '''f.write("URL: " + self.task[0] + "\n")
             f.write("From: " + "\n")
-            f.write("To: " +  "\n")
+            f.write("To: " +  "\n")'''
             f.write(unicode(res,"utf-8"))
             f.write("\n\n\n")
         f.close()
@@ -33,10 +38,14 @@ class Task():
 
     def getHtml(self):
         url=self.task[0]
+
         try:
             response = urllib2.urlopen(url)
             html = response.read();
+            self.clearFile(self.task[5])
+
             if (html.find(self.task[3]) != -1):
+
                 for i in range(len(self.task[1])):
                     startIndex = html.find(self.task[1][i])
                     finishIndex = html.find(self.task[2][i]) + len(self.task[2][i])
